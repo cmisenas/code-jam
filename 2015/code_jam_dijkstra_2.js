@@ -49,6 +49,7 @@ function doSomethingWithInput(data) {
 function solveCase(params, str) {
   var prodI=prodJ=prodK=strI=strJ=strK='',
       finalProd='',
+      subProd='',
       l = parseInt(params.shift(), 10),
       x = parseInt(params.shift(), 10);
   console.log(x);
@@ -68,17 +69,20 @@ function solveCase(params, str) {
       if(prodI.length===0){prodI=strArr[i];}else{prodI=multiplyQuatStr(prodI+strArr[i]);}
 
       if(prodI==='i'){//i is found
-        for(var j=i+1; j<(strArr.length-1); j++){
-          strJ += strArr[j];
-          prodJ = multiplyQuatStr(prodJ+strArr[j]);
+        subProd=multiplyQuatStr(strArr.slice(j));
+        if(subProd==='i'){
+          for(var j=i+1; j<(strArr.length-1); j++){
+            strJ += strArr[j];
+            prodJ = multiplyQuatStr(prodJ+strArr[j]);
 
-          if(prodJ==='j'){//j is found
-            strK += strArr.slice(j+1).join('');
-            prodK=multiplyQuatStr(strK);
-            if(prodK==='k'){return "YES";}
+            if(prodJ==='j'){//j is found
+              strK += strArr.slice(j+1).join('');
+              prodK=multiplyQuatStr(strK);
+              if(prodK==='k'){return "YES";}
+            }
           }
+          strJ=strK='';
         }
-        strJ=strK='';
       }
     }
     /*****BRUTE FORCE END*****/
